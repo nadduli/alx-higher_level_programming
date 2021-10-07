@@ -63,3 +63,25 @@ Now Testing:
     Traceback (most recent call last):
         ...
     TypeError: ...must be an integer
+
+------------------------------------
+    test for negative float overflow
+
+    >>> negative_infinity = -float('inf')
+    >>> r = add_integer(negative_infinity)
+    >>> print(r)
+    89
+
+------------------------------------
+    test for positive float overflow
+
+    >>> positive_infinity = float('inf')
+    >>> positive_infinity == float('inf')
+    True
+    >>> positive_infinity is float('inf')
+    False
+    >>> r = add_integer(positive_infinity)
+    >>> type(r) == float
+    False
+    >>> print(r)
+    89
