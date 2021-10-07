@@ -1,36 +1,35 @@
 #!/usr/bin/python3
-"""Module for matrix Calculations"""
+"""
+Module 2-matrix_divided
+Contains method that divides all elements of a matrix and returns new matrix
+Requires same size lists of ints or floats, and max two decimal places
+"""
 
 
 def matrix_divided(matrix, div):
-    '''This function devides all elements of a matrix
-    args:
-        matrix (list): list of lists of integers/floats
-        div (int): integer or float
-    returns:
-        a new matrix
-    '''
-    if type(div) is not int and type(div) is not float:
-        raise TypeError('div must be a number')
-    elif div == 0:
-        raise ZeroDivisionError('division by zero')
+    """
+    Returns new matrix with dividends
+    """
+    if not isinstance(div, (int, float)):
+        raise TypeError("div must be a number")
+    if div == 0:
+        raise ZeroDivisionError("division by zero")
 
-    fst_lst_len = len(matrix[0])
-    new_matrix = list()
+    msg = "matrix must be a matrix (list of lists) of integers/floats"
+    if type(matrix) is not list or len(matrix) == 0 or len(matrix[0]) == 0:
+        raise TypeError(msg)
 
-    for lst in matrix:
-        if len(lst) != fst_lst_len:
-            raise TypeError('Each row of the matrix must have the same size')
-
-        new_list = list()
-
-        for e in lst:
-            if type(e) is not int and type(e) is not float:
-                raise TypeError(
-                    'matrix must be a matrix(list of lists) of integers/floats'
-                    )
-            new_list.append(round(e / div, 2))
-
-        new_matrix.append(new_list)
-
+    new_matrix = []
+    samelen = len(matrix[0])
+    for lists in matrix:
+        if type(lists) is not list:
+            raise TypeError(msg)
+        if len(lists) != samelen:
+            raise TypeError("Each row of the matrix must have the same size")
+        newlist = []
+        for i in lists:
+            if not isinstance(i, (int, float)):
+                raise TypeError(msg)
+            newlist.append(round(i/div, 2))
+        new_matrix.append(newlist)
     return new_matrix
