@@ -1,87 +1,49 @@
 #!/usr/bin/python3
-'''module for marices calculations'''
+"""
+Module 100-matrix_mul
+Contains method that does matrix multiplication
+Requires same size lists/rows of ints or floats
+"""
 
 
 def matrix_mul(m_a, m_b):
-    '''this function multplies two matrices
-    args:
-        m_a (list of list of int or float): matrix a
-        m_b (list of list of int or float): matrix b
-    returns:
-        a matrix result of there multiplication
-    '''
+    """
+    Returns resulting matrix multiplication
+    """
+    if not isinstance(m_a, list) or not isinstance(m_b, list):
+        raise TypeError("{} must be a list".format
+                        ("m_a" if not isinstance(m_a, list) else "m_b"))
 
-    if type(m_a) is not list:
-        raise TypeError('m_a must be a list')
-    elif type(m_b) is not list:
-        raise TypeError('m_b must be a list')
+    if len(m_a) == 0 or len(m_b) == 0 or m_a == [[]] or m_b == [[]]:
+        raise ValueError("{} can't be empty".format
+                         ("m_a" if len(m_a) == 0 else "m_b"))
 
-    for l in m_a:
-        if type(l) is not list:
-            raise TypeError('m_a must be a list of lists')
-    for l in m_b:
-        if type(l) is not list:
-            raise TypeError('m_b must be a list of lists')
+    for eachrow in m_a:
+        for n in eachrow:
+            if not isinstance(n, (int, float)):
+                raise TypeError("m_a should contain only integers or floats")
+        if len(eachrow) != len(m_a[0]):
+            raise TypeError("each row of m_a must should be of the same size")
+        if len(eachrow) != len(m_b):
+            raise ValueError("m_a and m_b can't be multiplied")
 
-    if len(m_a) == 0:
-        raise ValueError("m_a can't be empty")
-    if len(m_b) == 0:
-        raise ValueError("m_b can't be empty")
+    for eachrow in m_b:
+        for n in eachrow:
+            if not isinstance(n, (int, float)):
+                raise TypeError("m_b should contain only integers or floats")
+        if len(eachrow) != len(m_b[0]):
+            raise TypeError("each row of m_b must should be of the same size")
 
-    for l in m_a:
-        if len(l) == 0:
-            raise ValueError("m_a can't be empty")
-    for l in m_b:
-        if len(l) == 0:
-            raise ValueError("m_b can't be empty")
-
-    for l in m_a:
-        for e in l:
-            if type(e) is not int and type(e) is not float:
-                raise TypeError(
-                    'm_a should contain only integers or floats'
-                    )
-
-    for l in m_b:
-        for e in l:
-            if type(e) is not int and type(e) is not float:
-                raise TypeError(
-                    'm_b should contain only integers or floats'
-                    )
-
-    size = len(m_a[0])
-    for l in m_a:
-        if len(l) != size:
-            raise TypeError(
-                'each row of m_a must be of the same size'
-                )
-
-    size = len(m_b[0])
-    for l in m_b:
-        if len(l) != size:
-            raise TypeError(
-                'each row of m_b must be of the same size'
-                )
-
-    if len(m_a[0]) != len(m_b):
-        raise ValueError("m_a and m_b can't be multiplied")
-
-    new_matrix = list()
-    c_size = len(m_a[0])
-
-    for l in m_a:
-        ls = []
-        i = 0   # for b
-        n = 0   # for a
-        j = 0   # for ls
-        for c in range(c_size):
-            ls.append(0)
-            for r in m_b:
-                ls[j] += r[i] * l[n]
-                n += 1
-            i += 1
+    l = []
+    new_matrix = []
+    n = 0
+    for rowA in range(len(m_a)):
+        l = []
+        for colB in range(len(m_b[0])):
+            for i in range(len(m_a[0])):
+                n += m_a[rowA][i] * m_b[i][colB]
+            l.append(n)
             n = 0
-            j += 1
-        new_matrix.append(ls)
+        new_matrix.append(l)
 
     return new_matrix
