@@ -1,87 +1,64 @@
-The 0-add_integer.py module
-======================
+# run test with python3 -m doctest -v ./tests/0-add_integer.txt
 
-Using ``add_integer``
--------------------
+First import method to test
+>>> add_integer = __import__('0-add_integer').add_integer
 
-Testing the add_integer function.  First import
-``add_integer`` from the ``0-add_integer`` module:
+SUCCESS CASES:
 
-    >>> add_integer = __import__('0-add_integer').add_integer
+Test signed and unsigned ints and floats:
+     >>> print(add_integer(1, 2))
+     3
+     >>> print(add_integer(-1, 2))
+     1
+     >>> print(add_integer(1.5, 2.9))
+     3
+     >>> print(add_integer(-2.9, 1))
+     -1
 
-Now Testing:
+Test use of default b=98 value:
+     >>> print(add_integer(1))
+     99
 
-------------------------------------
-    test if it raises TypeError if arguments aren't int of float
+FAIL CASES:
 
-    >>> add_integer('hi', 5) # doctest: +ELLIPSIS
-    Traceback (most recent call last):
-    TypeError: ... must be an integer
+Test no args:
+     >>> print(add_integer(None))
+     Traceback (most recent call last):
+     ...
+     TypeError: a must be an integer
+     >>> print(add_integer(None, None))
+     Traceback (most recent call last):
+     ...
+     TypeError: a must be an integer
 
-------------------------------------
-    test if floats are casted to int
+Test extra args:
+     >>> print(add_integer(1, 2, 3))
+     Traceback (most recent call last):
+     ...
+     TypeError: add_integer() takes from 1 to 2 positional arguments but 3 were given
 
-    >>> r = add_integer(4.54, 5) # doctest: +ELLIPSIS
-    >>> print(r)
-    9
+Test other data types:
+     >>> print(add_integer("hey"))
+     Traceback (most recent call last):
+     ...
+     TypeError: a must be an integer
+     >>> print(add_integer(0, [1, 2, 3]))
+     Traceback (most recent call last):
+     ...
+     TypeError: b must be an integer
 
-------------------------------------
-    test if it will raise a error when passing no arguments
+Test max/min numbers Python can handle ("inf" is infinity):
+     >>> print(add_integer(float("inf")))
+     Traceback (most recent call last):
+     ...
+     OverflowError: cannot convert float infinity to integer
+     >>> print(add_integer(float("-inf")))
+     Traceback (most recent call last):
+     ...
+     OverflowError: cannot convert float infinity to integer
 
-    >>> r = add_integer() # doctest: +ELLIPSIS, +IGNORE_EXCEPTION_DETAIL
-    Traceback (most recent call last):
-	    ...
-    TypeError:
-
-------------------------------------
-    test if it gor only one argument
-
-    >>> r = add_integer(-5) # doctest: +ELLIPSIS
-    >>> print(r)
-    93
-
-------------------------------------
-    test if it got only one None argument
-
-    >>> r = add_integer(None) # doctest: +ELLIPSIS
-    Traceback (most recent call last):
-        ...
-    TypeError: ... must be an integer
-
-------------------------------------
-    test if it got a True argument
-
-    >>> r = add_integer(True) # doctest: +ELLIPSIS
-    Traceback (most recent call last):
-        ...
-    TypeError: ... must be an integer
-
-------------------------------------
-    test if it got a False argument
-
-    >>> r = add_integer(False) # doctest: +ELLIPSIS
-    Traceback (most recent call last):
-        ...
-    TypeError: ...must be an integer
-
-------------------------------------
-    test for negative float overflow
-
-    >>> negative_infinity = -float('inf')
-    >>> r = add_integer(negative_infinity)
-    >>> print(r)
-    89
-
-------------------------------------
-    test for positive float overflow
-
-    >>> positive_infinity = float('inf')
-    >>> positive_infinity == float('inf')
-    True
-    >>> positive_infinity is float('inf')
-    False
-    >>> r = add_integer(positive_infinity)
-    >>> type(r) == float
-    False
-    >>> print(r)
-    89
+Test special float NaN in Python (not a number):
+     >>> print(add_integer(float("NaN")))
+     Traceback (most recent call last):
+     ...
+     ValueError: cannot convert float NaN to integer
