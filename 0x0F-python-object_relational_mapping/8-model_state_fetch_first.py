@@ -22,8 +22,7 @@ if __name__ == '__main__':
     local_session = Session()
     result = local_session.query(State).order_by(State.id).first()
     local_session.close()
+    engine.dispose()
 
-    if result:
+    for res in result:
         print('{}: {}'.format(result.id, result.name))
-    else:
-        print('warning error')
