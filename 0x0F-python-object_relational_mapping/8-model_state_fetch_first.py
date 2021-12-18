@@ -18,14 +18,12 @@ if __name__ == '__main__':
     engine = create_engine('mysql+mysqldb://{}:{}@{}:{}/{}'.format(
                            username, password, host, port, db_name),
                            pool_pre_ping=True, poolclass=NullPool)
-    
     Session = sessionmaker(bind=engine)
     local_session = Session()
     result = local_session.query(State).order_by(State.id).first()
-    
+    local_session.close()
 
     if result:
-        print("{}: {}".format(result.id, result.name))
+        print('{}: {}'.format(result.id, result.name))
     else:
-        print("Nothing")
-    local_session.close()
+        print('Nothing')
