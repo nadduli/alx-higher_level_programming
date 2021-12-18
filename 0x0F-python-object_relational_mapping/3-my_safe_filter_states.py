@@ -3,10 +3,11 @@
     from hbtn_0e_4_usa where name 
     is passed as an argument and
     free from sql injection """
+
 if __name__ == '__main__':
 
-    import sys
     import MySQLdb
+    import sys
 
     db = MySQLdb.connect( host='localhost', port=3306,
                           user=sys.argv[1], passwd=sys.argv[2], db=sys.argv[3])
