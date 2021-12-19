@@ -12,8 +12,10 @@ if __name__ == "__main__":
     db_name = sys.argv[3]
     host = 'localhost'
     port = '3306'
+
     engine = create_engine('mysql+mysqldb://{}:{}@{}:{}/{}'.format(
-             username, password, host, port, db_name), pool_pre_ping=True)
+                           username, password, host, port, db_name)
+                            , pool_pre_ping=True)
     Session = sessionmaker(bind=engine)
     local_session = Session()
     states = local_session.query(State).order_by(State.id).all()
