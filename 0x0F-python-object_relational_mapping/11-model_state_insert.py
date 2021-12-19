@@ -14,11 +14,11 @@ if __name__ == '__main__':
     port = '3306'
 
     engine = create_engine('mysql+mysqldb://{}:{}@{}:{}/{}'.format(
-                           username, password, database_name, host, port
-                           pool_pre_ping=True))
+                           username, password, host, port, database_name),
+                           pool_pre_ping=True)
     Session = sessionmaker(bind=engine)
     session = Session()
-    state1 = State('Louisiana')
+    state1 = State(name='Louisiana')
     session.add(state1)
     session.commit
 
